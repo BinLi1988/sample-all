@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="stepScope" class="org.springframework.batch.core.scope.StepScope">
+        <property name="autoProxy" value="false"/>
+    </bean>
+
+    <bean id="jobScope" class="org.springframework.batch.core.scope.JobScope">
+        <property name="autoProxy" value="false"/>
+    </bean>
+
+    <bean id="recordReader" class="com.bamboo.sample.spring.batch.step.reader.RecordReader" scope="step">
+        <constructor-arg value="file://#{jobParameters['input.file.name']}"/>
+        <aop:scoped-proxy/>
+    </bean>
+
+    <bean id="recordProcessor" class="com.bamboo.sample.spring.batch.step.processor.RecordProcessor"/>
+
+    <bean id="recordWriter" class="com.bamboo.sample.spring.batch.step.writer.RecordWriter"/>
+
+    <bean id="recordTasklet" class="com.bamboo.sample.spring.batch.step.tasklet.RecordTasklet"/>
+
+
+</beans>

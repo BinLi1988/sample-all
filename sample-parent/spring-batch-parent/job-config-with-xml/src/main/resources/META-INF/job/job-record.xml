@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <batch:job id="recordJob">
+        <batch:step id="firstStep" next="secondStep">
+            <batch:tasklet>
+                <batch:chunk reader="recordReader"
+                             writer="recordWriter"
+                             processor="recordProcessor"
+                             commit-interval="1"/>
+            </batch:tasklet>
+        </batch:step>
+        <batch:step id="secondStep">
+            <batch:tasklet ref="recordTasklet"/>
+        </batch:step>
+    </batch:job>
+
+
+</beans>
